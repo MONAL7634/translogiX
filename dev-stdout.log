@@ -1,0 +1,38 @@
+[1m[38;2;173;127;168m▲ Next.js 16.2.6[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.16.0.2:3000
+- Environments: .env
+[32m[1m✓[22m[39m Ready in 440ms
+
+ GET /login [32m200[39m in 556ms[2m (next.js: 211ms, proxy.ts: 4ms, application-code: 342ms)[22m
+ POST /api/auth/sign-in/email [32m200[39m in 1088ms[2m (next.js: 925ms, proxy.ts: 9ms, application-code: 154ms)[22m
+ GET /api/auth/get-session [32m200[39m in 28ms[2m (next.js: 11ms, proxy.ts: 3ms, application-code: 15ms)[22m
+ GET /transporter [32m200[39m in 110ms[2m (next.js: 30ms, proxy.ts: 44ms, application-code: 36ms)[22m
+ GET /api/auth/get-session [32m200[39m in 22ms[2m (next.js: 5ms, proxy.ts: 4ms, application-code: 14ms)[22m
+ GET /api/auth/get-session [32m200[39m in 22ms[2m (next.js: 4ms, proxy.ts: 3ms, application-code: 15ms)[22m
+ GET /api/auth/get-session [32m200[39m in 34ms[2m (next.js: 13ms, proxy.ts: 5ms, application-code: 16ms)[22m
+ GET /api/auth/get-session [32m200[39m in 31ms[2m (next.js: 13ms, proxy.ts: 3ms, application-code: 15ms)[22m
+ GET /transporter/vehicles [32m200[39m in 256ms[2m (next.js: 34ms, proxy.ts: 41ms, application-code: 182ms)[22m
+ GET /api/auth/get-session [32m200[39m in 20ms[2m (next.js: 4ms, proxy.ts: 3ms, application-code: 12ms)[22m
+ GET /api/auth/get-session [32m200[39m in 23ms[2m (next.js: 6ms, proxy.ts: 4ms, application-code: 13ms)[22m
+ GET /api/auth/get-session [32m200[39m in 128ms[2m (next.js: 5ms, proxy.ts: 2ms, application-code: 121ms)[22m
+ GET /api/vehicles?transporterId=ab5fd1db-20e3-45e3-93db-8147b0f8357a [32m200[39m in 134ms[2m (next.js: 100ms, proxy.ts: 4ms, application-code: 30ms)[22m
+ GET /api/vehicles?transporterId=ab5fd1db-20e3-45e3-93db-8147b0f8357a [32m200[39m in 14ms[2m (next.js: 3ms, proxy.ts: 3ms, application-code: 8ms)[22m
+[32m[1m✓[22m[39m Compiled in 374ms
+ GET /api/vehicles?transporterId=ab5fd1db-20e3-45e3-93db-8147b0f8357a [32m200[39m in 426ms[2m (next.js: 98ms, proxy.ts: 60ms, application-code: 269ms)[22m
+ GET /api/auth/get-session [32m200[39m in 385ms[2m (next.js: 215ms, proxy.ts: 112ms, application-code: 58ms)[22m
+ GET /transporter/vehicles [32m200[39m in 639ms[2m (next.js: 88ms, proxy.ts: 452ms, application-code: 98ms)[22m
+ GET /api/auth/get-session [32m200[39m in 39ms[2m (next.js: 7ms, proxy.ts: 4ms, application-code: 28ms)[22m
+ GET /transporter/vehicles [32m200[39m in 83ms[2m (next.js: 5ms, proxy.ts: 47ms, application-code: 32ms)[22m
+[32m[1m✓[22m[39m Compiled in 100ms
+ GET /api/auth/get-session [31m500[39m in 1204ms[2m (next.js: 1043ms, proxy.ts: 4ms, application-code: 156ms)[22m
+ GET /login [31m500[39m in 25ms[2m (next.js: 11ms, proxy.ts: 5ms, application-code: 10ms)[22m
+ GET /api/auth/get-session [31m500[39m in 38ms[2m (next.js: 23ms, proxy.ts: 1978µs, application-code: 13ms)[22m
+ GET /login [31m500[39m in 19ms[2m (next.js: 8ms, proxy.ts: 3ms, application-code: 8ms)[22m
+ GET /login [31m500[39m in 15ms[2m (next.js: 5ms, proxy.ts: 2ms, application-code: 7ms)[22m
+ GET /login [31m500[39m in 48ms[2m (next.js: 12ms, proxy.ts: 22ms, application-code: 13ms)[22m
+ GET /login [31m500[39m in 19ms[2m (next.js: 7ms, proxy.ts: 2ms, application-code: 9ms)[22m
+ GET /login [31m500[39m in 15ms[2m (next.js: 5ms, proxy.ts: 2ms, application-code: 8ms)[22m
+ GET /login [31m500[39m in 41ms[2m (next.js: 7ms, proxy.ts: 21ms, application-code: 13ms)[22m
+[32m[1m✓[22m[39m Compiled in 68ms
+ GET /login [32m200[39m in 366ms[2m (next.js: 78ms, proxy.ts: 4ms, application-code: 284ms)[22m

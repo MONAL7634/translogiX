@@ -1,0 +1,23 @@
+[33m[1m⚠[22m[39m The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+2026-05-10T09:52:25.956Z ERROR [Better Auth]: SyntaxError SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+# SERVER_ERROR:  SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+2026-05-10T09:54:30.890Z ERROR [Better Auth]: Invalid password
+2026-05-10T09:54:57.709Z ERROR [Better Auth]: SyntaxError SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+# SERVER_ERROR:  SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+2026-05-10T09:55:39.266Z ERROR [Better Auth]: SyntaxError SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+# SERVER_ERROR:  SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+2026-05-10T09:55:46.399Z ERROR [Better Auth]: SyntaxError SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+# SERVER_ERROR:  SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+2026-05-10T10:27:34.940Z ERROR [Better Auth]: SyntaxError SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+# SERVER_ERROR:  SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+2026-05-10T10:30:40.132Z ERROR [Better Auth]: User not found { email: 'nonexistent@translogix.com' }

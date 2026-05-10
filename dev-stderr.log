@@ -1,0 +1,1037 @@
+[33m[1m⚠[22m[39m The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:9
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const retryKey = useRef(0);
+     |         ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m [31mUncaught Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+[39m
+[31m    at <unknown> (Error: ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)
+    at <unknown> (Error: (./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10)[39m
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:10
+the name `retryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |          ^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
+[36m[browser][39m ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx:75:20
+the name `setRetryKey` is defined multiple times
+  73 |   const basePath = role === "ADMIN" ? "/admin/vehicles" : "/transporter/vehicles";
+  74 |
+> 75 |   const [retryKey, setRetryKey] = useState(0);
+     |                    ^^^^^^^^^^^
+  76 |
+  77 |   useEffect(() => {
+  78 |     let cancelled = false;
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component Browser]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(dashboard)/admin/vehicles/vehicle-list-client.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Client Component SSR]
+    ./app/(dashboard)/transporter/vehicles/page.tsx [Server Component] 
