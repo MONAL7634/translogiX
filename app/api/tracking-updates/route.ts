@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { trackingUpdates, shipments } from "@/lib/db/schema";
 import { trackingUpdateSchema } from "@/lib/validations";
+import { requireRole } from "@/lib/auth/api-utils";
 import { eq, desc } from "drizzle-orm";
 
 /**
@@ -52,8 +53,21 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    // Require authentication — only ADMIN, DRIVER, or TRANSPORTER can create tracking updates
+    const authResult = await requireRole(request, ["ADMIN", "DRIVER", "TRANSPORTER"]);
+    if (authResult.error) return authResult.error;
+
     const body = await request.json();
-    const validated = trackingUpdateSchema.parse(body);
+    const parsed = trackingUpdateSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid input", details: parsed.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+
+    const validated = parsed.data;
 
     // Verify the shipment exists
     const [shipment] = await db
