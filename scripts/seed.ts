@@ -101,6 +101,7 @@ async function seed() {
       email: "driver@translogix.com",
       name: "Driver User",
       role: "DRIVER",
+      transporterId: swiftCargoId,
       emailVerified: true,
     },
     {
