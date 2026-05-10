@@ -51,8 +51,31 @@ export const vehicleUpdateApiSchema = vehicleApiSchema.partial();
 export type VehicleFormInput = z.infer<typeof vehicleFormSchema>;
 export type VehicleApiInput = z.infer<typeof vehicleApiSchema>;
 
+// ─── Route ───────────────────────────────────────────────────────────────────
+
+export const routeFormSchema = z.object({
+  origin: z.string().min(1, "Origin is required"),
+  destination: z.string().min(1, "Destination is required"),
+  distanceKm: z.coerce
+    .number()
+    .positive("Distance must be a positive number"),
+  estimatedTime: z.string().min(1, "Estimated time is required"),
+  billingRate: z.coerce
+    .number()
+    .positive("Billing rate must be a positive number"),
+  vendorRate: z.coerce
+    .number()
+    .positive("Vendor rate must be a positive number"),
+});
+
+export const routeApiSchema = routeFormSchema;
+
+export const routeUpdateApiSchema = routeApiSchema.partial();
+
+export type RouteFormInput = z.infer<typeof routeFormSchema>;
+export type RouteApiInput = z.infer<typeof routeApiSchema>;
+
 // Zod validation schemas will be implemented alongside each feature
 // This file will contain schemas for:
-// - Route CRUD validation
 // - Shipment CRUD validation
 // - Tracking update validation
