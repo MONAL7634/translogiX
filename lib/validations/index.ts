@@ -75,7 +75,128 @@ export const routeUpdateApiSchema = routeApiSchema.partial();
 export type RouteFormInput = z.infer<typeof routeFormSchema>;
 export type RouteApiInput = z.infer<typeof routeApiSchema>;
 
+// ─── Shipment ────────────────────────────────────────────────────────────────
+
+export const shipmentStatusEnum = z.enum([
+  "CREATED",
+  "ASSIGNED",
+  "PICKED_UP",
+  "IN_TRANSIT",
+  "DELIVERED",
+  "CANCELLED",
+]);
+
+export const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
+  CREATED: ["ASSIGNED", "CANCELLED"],
+  ASSIGNED: ["PICKED_UP", "CANCELLED"],
+  PICKED_UP: ["IN_TRANSIT", "CANCELLED"],
+  IN_TRANSIT: ["DELIVERED", "CANCELLED"],
+  DELIVERED: [],
+  CANCELLED: [],
+};
+
+export const STATUS_BADGE_COLORS: Record<string, string> = {
+  CREATED:
+    "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+  ASSIGNED:
+    "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+  PICKED_UP:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  IN_TRANSIT:
+    "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
+  DELIVERED:
+    "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  CANCELLED:
+    "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
+};
+
+export const shipmentFormSchema = z
+  .object({
+    packageCode: z.string().min(1, "Package code is required"),
+    source: z.string().min(1, "Source is required"),
+    destination: z.string().min(1, "Destination is required"),
+    materialType: z.string().min(1, "Material type is required"),
+    grossWeightKg: z.coerce
+      .number()
+      .positive("Gross weight must be a positive number"),
+    tareWeightKg: z.coerce
+      .number()
+      .positive("Tare weight must be a positive number")
+      .optional()
+      .nullable(),
+    quantity: z.coerce
+      .number()
+      .int("Quantity must be a whole number")
+      .positive("Quantity must be a positive number"),
+    pickupDate: z.date({ error: "Pickup date is required" }),
+    deliveryDeadline: z.date({
+      error: "Delivery deadline is required",
+    }),
+    transporterId: z.string().optional(),
+    vehicleId: z.string().optional(),
+    routeId: z.string().optional(),
+  })
+  .refine((data) => data.deliveryDeadline >= data.pickupDate, {
+    message: "Delivery deadline must be on or after pickup date",
+    path: ["deliveryDeadline"],
+  });
+
+export const shipmentApiSchema = z
+  .object({
+    packageCode: z.string().min(1, "Package code is required"),
+    source: z.string().min(1, "Source is required"),
+    destination: z.string().min(1, "Destination is required"),
+    materialType: z.string().min(1, "Material type is required"),
+    grossWeightKg: z.coerce
+      .number()
+      .positive("Gross weight must be a positive number"),
+    tareWeightKg: z.coerce
+      .number()
+      .positive()
+      .optional()
+      .nullable(),
+    quantity: z.coerce.number().int().positive("Quantity must be positive"),
+    pickupDate: z.string().min(1, "Pickup date is required"),
+    deliveryDeadline: z.string().min(1, "Delivery deadline is required"),
+    transporterId: z.string().optional().nullable(),
+    vehicleId: z.string().optional().nullable(),
+    routeId: z.string().optional().nullable(),
+  })
+  .refine((data) => data.deliveryDeadline >= data.pickupDate, {
+    message: "Delivery deadline must be on or after pickup date",
+    path: ["deliveryDeadline"],
+  });
+
+// Define the base object shape for shipment updates (without refinement, so .partial() works)
+const shipmentApiBaseShape = {
+  packageCode: z.string().min(1, "Package code is required"),
+  source: z.string().min(1, "Source is required"),
+  destination: z.string().min(1, "Destination is required"),
+  materialType: z.string().min(1, "Material type is required"),
+  grossWeightKg: z.coerce
+    .number()
+    .positive("Gross weight must be a positive number"),
+  tareWeightKg: z.coerce.number().positive().optional().nullable(),
+  quantity: z.coerce.number().int().positive("Quantity must be positive"),
+  pickupDate: z.string().min(1, "Pickup date is required"),
+  deliveryDeadline: z.string().min(1, "Delivery deadline is required"),
+  transporterId: z.string().optional().nullable(),
+  vehicleId: z.string().optional().nullable(),
+  routeId: z.string().optional().nullable(),
+};
+
+export const shipmentUpdateApiSchema = z.object(shipmentApiBaseShape).partial();
+
+export const shipmentStatusUpdateSchema = z.object({
+  status: shipmentStatusEnum,
+});
+
+export type ShipmentFormInput = z.infer<typeof shipmentFormSchema>;
+export type ShipmentApiInput = z.infer<typeof shipmentApiSchema>;
+export type ShipmentStatusUpdateInput = z.infer<
+  typeof shipmentStatusUpdateSchema
+>;
+
 // Zod validation schemas will be implemented alongside each feature
 // This file will contain schemas for:
-// - Shipment CRUD validation
 // - Tracking update validation

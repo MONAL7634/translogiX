@@ -6,8 +6,8 @@ import { desc, ilike, or } from "drizzle-orm";
 import { requireRole } from "@/lib/auth/api-utils";
 
 export async function GET(request: NextRequest) {
-  // Verify session and ADMIN role
-  const authResult = await requireRole(request, ["ADMIN"]);
+  // Verify session — ADMIN or TRANSPORTER can read routes (for shipment form)
+  const authResult = await requireRole(request, ["ADMIN", "TRANSPORTER"]);
   if (authResult.error) return authResult.error;
 
   try {
