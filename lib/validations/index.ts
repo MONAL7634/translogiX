@@ -197,6 +197,23 @@ export type ShipmentStatusUpdateInput = z.infer<
   typeof shipmentStatusUpdateSchema
 >;
 
-// Zod validation schemas will be implemented alongside each feature
-// This file will contain schemas for:
-// - Tracking update validation
+// ─── Tracking Update ──────────────────────────────────────────────────────────
+
+export const trackingUpdateSchema = z.object({
+  shipmentId: z.string().min(1, "Shipment ID is required"),
+  location: z.string().min(1, "Location is required"),
+  latitude: z.coerce
+    .number()
+    .min(-90, "Latitude must be between -90 and 90")
+    .max(90, "Latitude must be between -90 and 90")
+    .optional()
+    .nullable(),
+  longitude: z.coerce
+    .number()
+    .min(-180, "Longitude must be between -180 and 180")
+    .max(180, "Longitude must be between -180 and 180")
+    .optional()
+    .nullable(),
+});
+
+export type TrackingUpdateInput = z.infer<typeof trackingUpdateSchema>;
