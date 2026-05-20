@@ -46,21 +46,10 @@ function daysBetween(from: Date, to: Date) {
   return Math.floor((to.getTime() - from.getTime()) / 86_400_000);
 }
 
-function statusProgress(status: ShipmentStatus) {
-  switch (status) {
-    case "CREATED":
-      return 0.05;
-    case "ASSIGNED":
-      return 0.18;
-    case "PICKED_UP":
-      return 0.38;
-    case "IN_TRANSIT":
-      return 0.68;
-    case "DELIVERED":
-      return 1;
-    case "CANCELLED":
-      return 0;
-  }
+interface RoutePoint {
+  address?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 interface TrafficProfile {
@@ -90,8 +79,23 @@ function trafficLevel(multiplier: number) {
   return multiplier >= 1.35 ? "Heavy" : multiplier >= 1.15 ? "Moderate" : "Light";
 }
 
+function googleRouteWaypoint(point: RoutePoint) {
+  if (point.latitude != null && point.longitude != null) {
+    return {
+      location: {
+        latLng: {
+          latitude: point.latitude,
+          longitude: point.longitude,
+        },
+      },
+    };
+  }
+
+  return { address: `${point.address}, India` };
+}
+
 async function getTrafficProfile(
-  origin: string,
+  origin: RoutePoint,
   destination: string,
   distanceKm: number
 ): Promise<TrafficProfile | null> {
@@ -108,7 +112,7 @@ async function getTrafficProfile(
         "X-Goog-FieldMask": "routes.duration,routes.staticDuration,routes.distanceMeters",
       },
       body: JSON.stringify({
-        origin: { address: `${origin}, India` },
+        origin: googleRouteWaypoint(origin),
         destination: { address: `${destination}, India` },
         travelMode: "DRIVE",
         routingPreference: "TRAFFIC_AWARE_OPTIMAL",
@@ -209,7 +213,7 @@ async function routeScore(route: {
 }) {
   const distanceKm = numeric(route.distanceKm);
   const [traffic, weather] = await Promise.all([
-    getTrafficProfile(route.origin, route.destination, distanceKm),
+    getTrafficProfile({ address: route.origin }, route.destination, distanceKm),
     getWeatherProfile(route.destination),
   ]);
   if (!traffic || !weather) return null;
@@ -437,22 +441,21 @@ export async function GET(request: NextRequest) {
       ? (
           await Promise.all(
             activeShipments.map(async (shipment) => {
-              const distanceKm = numeric(shipment.routeDistanceKm);
-              if (!distanceKm) return null;
+              const latestUpdate = latestUpdateByShipment.get(shipment.id);
+              const latitude = coordinate(latestUpdate?.latitude);
+              const longitude = coordinate(latestUpdate?.longitude);
+              if (latitude == null || longitude == null) return null;
 
               const traffic = await getTrafficProfile(
-                shipment.source,
+                { latitude, longitude },
                 shipment.destination,
-                distanceKm
+                numeric(shipment.routeDistanceKm)
               );
               const weather = await getWeatherProfile(shipment.destination);
               if (!traffic || !weather) return null;
 
-              const progress = statusProgress(shipment.status as ShipmentStatus);
-              const remainingKm = traffic.distanceKm * (1 - progress);
-              const etaHours = Math.round(
-                traffic.durationHours * (1 - progress) + weather.delayHours
-              );
+              const remainingKm = traffic.distanceKm;
+              const etaHours = Math.round(traffic.durationHours + weather.delayHours);
               const predictedDelivery = new Date(Date.now() + etaHours * 3_600_000);
               const deadline = new Date(`${shipment.deliveryDeadline}T23:59:59`);
               const delayHours = Math.max(
@@ -473,6 +476,9 @@ export async function GET(request: NextRequest) {
                 delayHours,
                 riskLevel: delayHours >= 12 ? "High" : delayHours > 0 ? "Medium" : "Low",
                 factors: [
+                  latestUpdate?.location
+                    ? `Current location: ${latestUpdate.location}`
+                    : "Current GPS location",
                   `${traffic.level} traffic`,
                   weather.condition,
                   `${Math.round(remainingKm)} km remaining`,
