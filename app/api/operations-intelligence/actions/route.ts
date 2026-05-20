@@ -27,6 +27,10 @@ const actionSchema = z.discriminatedUnion("action", [
     action: z.literal("schedule-maintenance"),
     vehicleId: z.string().uuid(),
   }),
+  z.object({
+    action: z.literal("complete-maintenance"),
+    vehicleId: z.string().uuid(),
+  }),
 ]);
 
 export async function POST(request: NextRequest) {
@@ -60,6 +64,39 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         message: "Vehicle marked for maintenance",
+        vehicle: updatedVehicle,
+      });
+    }
+
+    if (body.action === "complete-maintenance") {
+      const [vehicle] = await db.select().from(vehicles).where(eq(vehicles.id, body.vehicleId));
+      if (!vehicle) return NextResponse.json({ error: "Vehicle not found" }, { status: 404 });
+      if (authResult.transporterId && vehicle.transporterId !== authResult.transporterId) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
+      const activeShipment = await findActiveShipmentUsingVehicle(body.vehicleId);
+      if (activeShipment) {
+        return NextResponse.json(
+          {
+            error: `Vehicle is assigned to active shipment ${activeShipment.packageCode}`,
+          },
+          { status: 409 }
+        );
+      }
+
+      const today = new Date().toISOString().split("T")[0];
+      const [updatedVehicle] = await db
+        .update(vehicles)
+        .set({
+          status: "AVAILABLE",
+          lastMaintenanceDate: today,
+          updatedAt: new Date(),
+        })
+        .where(eq(vehicles.id, body.vehicleId))
+        .returning();
+
+      return NextResponse.json({
+        message: "Vehicle maintenance recorded",
         vehicle: updatedVehicle,
       });
     }

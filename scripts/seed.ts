@@ -20,6 +20,10 @@ function daysFromNow(days: number): string {
   return d.toISOString().split("T")[0];
 }
 
+function daysAgo(days: number): string {
+  return daysFromNow(-days);
+}
+
 function hoursAgo(hours: number): Date {
   return new Date(Date.now() - hours * 60 * 60 * 1000);
 }
@@ -164,6 +168,7 @@ async function seed() {
       capacityKg: 18000,
       currentLocation: "Mumbai",
       status: "AVAILABLE",
+      lastMaintenanceDate: daysAgo(42),
     },
     {
       id: vehicle2Id,
@@ -173,6 +178,7 @@ async function seed() {
       capacityKg: 25000,
       currentLocation: "Chennai",
       status: "BUSY",
+      lastMaintenanceDate: daysAgo(91),
     },
     {
       id: vehicle3Id,
@@ -182,6 +188,7 @@ async function seed() {
       capacityKg: 5000,
       currentLocation: "Bangalore",
       status: "AVAILABLE",
+      lastMaintenanceDate: daysAgo(18),
     },
     {
       id: vehicle4Id,
@@ -191,6 +198,7 @@ async function seed() {
       capacityKg: 30000,
       currentLocation: "Hyderabad",
       status: "AVAILABLE",
+      lastMaintenanceDate: daysAgo(128),
     },
     {
       id: vehicle5Id,
@@ -200,6 +208,7 @@ async function seed() {
       capacityKg: 15000,
       currentLocation: "Kolkata",
       status: "MAINTENANCE",
+      lastMaintenanceDate: daysAgo(210),
     },
   ]);
 

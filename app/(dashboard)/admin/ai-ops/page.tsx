@@ -761,6 +761,25 @@ export default function AiOperationsPage() {
                       ? "Applying..."
                       : "Mark Maintenance"}
                 </Button>
+                <Button
+                  size="sm"
+                  className="mt-3 ml-2"
+                  disabled={applyingAction === `complete-maintenance:${item.vehicleId}`}
+                  onClick={() =>
+                    applyOperationsAction(
+                      `complete-maintenance:${item.vehicleId}`,
+                      {
+                        action: "complete-maintenance",
+                        vehicleId: item.vehicleId,
+                      },
+                      `${item.vehicleNumber} maintenance date updated`
+                    )
+                  }
+                >
+                  {applyingAction === `complete-maintenance:${item.vehicleId}`
+                    ? "Saving..."
+                    : "Maintenance Done Today"}
+                </Button>
               </div>
             ))}
               </CardContent>
