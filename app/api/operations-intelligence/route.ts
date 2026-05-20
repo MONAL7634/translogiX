@@ -46,6 +46,23 @@ function daysBetween(from: Date, to: Date) {
   return Math.floor((to.getTime() - from.getTime()) / 86_400_000);
 }
 
+function maintenanceRiskScore(
+  lastMaintenanceDate: string | null,
+  activeLoad: number,
+  status: string
+) {
+  if (!lastMaintenanceDate) return null;
+
+  const lastMaintenance = new Date(`${lastMaintenanceDate}T00:00:00`);
+  const daysSinceMaintenance = Math.max(0, daysBetween(lastMaintenance, new Date()));
+  const statusPenalty = status === "MAINTENANCE" ? 35 : status === "BUSY" ? 10 : 0;
+
+  return Math.min(
+    100,
+    Math.round(daysSinceMaintenance * 0.28 + activeLoad * 18 + statusPenalty)
+  );
+}
+
 interface RoutePoint {
   address?: string;
   latitude?: number;
@@ -375,24 +392,28 @@ export async function GET(request: NextRequest) {
                   ? Math.max(0, currentHours - best.analysis.predictedHours)
                   : 0;
 
-              if (!best || !currentHours || savedHours <= 0) return null;
+              if (!best || !current || !currentHours) return null;
+              const recommended = savedHours > 0 ? best : current;
 
               return {
                 shipmentId: shipment.id,
                 packageCode: shipment.packageCode,
-                recommendedRouteId: best.route.id,
+                recommendedRouteId: savedHours > 0 ? recommended.route.id : null,
                 currentRoute: shipment.routeOrigin
                   ? `${shipment.routeOrigin} to ${shipment.routeDestination}`
                   : `${shipment.source} to ${shipment.destination}`,
-                recommendedRoute: `${best.route.origin} to ${best.route.destination}`,
-                trafficLevel: best.analysis.traffic.level,
-                weatherCondition: best.analysis.weather.condition,
-                predictedHours: best.analysis.predictedHours,
-                trafficSource: best.analysis.traffic.source,
-                weatherSource: best.analysis.weather.source,
-                distanceKm: Math.round(best.analysis.distanceKm),
+                recommendedRoute: `${recommended.route.origin} to ${recommended.route.destination}`,
+                trafficLevel: recommended.analysis.traffic.level,
+                weatherCondition: recommended.analysis.weather.condition,
+                predictedHours: recommended.analysis.predictedHours,
+                trafficSource: recommended.analysis.traffic.source,
+                weatherSource: recommended.analysis.weather.source,
+                distanceKm: Math.round(recommended.analysis.distanceKm),
                 savedHours,
-                reason: "Lower live traffic and weather-adjusted ETA than the assigned route.",
+                reason:
+                  savedHours > 0
+                    ? "Lower live traffic and weather-adjusted ETA than the assigned route."
+                    : "Assigned route has the best live ETA among known routes.",
               };
             })
           )
@@ -407,25 +428,23 @@ export async function GET(request: NextRequest) {
     }
 
     const maintenancePredictions = vehicleRows.map((vehicle) => {
-      const lastMaintenance = vehicle.lastMaintenanceDate
-        ? new Date(`${vehicle.lastMaintenanceDate}T00:00:00`)
-        : null;
-      if (!lastMaintenance) return null;
-
-      const daysSinceMaintenance = Math.max(0, daysBetween(lastMaintenance, new Date()));
       const activeLoad = vehicleLoad.get(vehicle.id) ?? 0;
-      const statusPenalty = vehicle.status === "MAINTENANCE" ? 35 : vehicle.status === "BUSY" ? 10 : 0;
-      const riskScore = Math.min(
-        100,
-        Math.round(daysSinceMaintenance * 0.28 + activeLoad * 18 + statusPenalty)
+      const riskScore = maintenanceRiskScore(
+        vehicle.lastMaintenanceDate,
+        activeLoad,
+        vehicle.status
       );
+      if (riskScore == null || !vehicle.lastMaintenanceDate) return null;
 
       return {
         vehicleId: vehicle.id,
         vehicleNumber: vehicle.vehicleNumber,
         status: vehicle.status,
         activeLoad,
-        daysSinceMaintenance,
+        daysSinceMaintenance: Math.max(
+          0,
+          daysBetween(new Date(`${vehicle.lastMaintenanceDate}T00:00:00`), new Date())
+        ),
         riskScore,
         riskLevel: riskScore >= 75 ? "High" : riskScore >= 45 ? "Medium" : "Low",
         recommendation:
@@ -496,41 +515,46 @@ export async function GET(request: NextRequest) {
         .filter((shipment) => shipment.status === "CREATED" && !shipment.vehicleId)
         .slice(0, 6)
         .map((shipment) => {
-        const weightKg = numeric(shipment.grossWeightKg);
-        const bestVehicle = maintenancePredictions
-          .map((prediction) => {
-            const vehicle = vehicleRows.find((row) => row.id === prediction.vehicleId);
-            if (!vehicle || vehicle.status !== "AVAILABLE" || vehicle.capacityKg < weightKg) {
-              return null;
-            }
-            const capacityFit = Math.max(0, 100 - ((vehicle.capacityKg - weightKg) / vehicle.capacityKg) * 100);
-            const score = Math.round(capacityFit - prediction.riskScore * 0.35);
-            return { vehicle, prediction, score };
-          })
-          .filter(Boolean)
-          .sort((a, b) => (b?.score ?? 0) - (a?.score ?? 0))[0];
+          const weightKg = numeric(shipment.grossWeightKg);
+          const bestVehicle = vehicleRows
+            .map((vehicle) => {
+              if (vehicle.status !== "AVAILABLE" || vehicle.capacityKg < weightKg) {
+                return null;
+              }
+              const capacityFit = Math.max(
+                0,
+                100 - ((vehicle.capacityKg - weightKg) / vehicle.capacityKg) * 100
+              );
+              const activeLoad = vehicleLoad.get(vehicle.id) ?? 0;
+              const riskScore =
+                maintenanceRiskScore(vehicle.lastMaintenanceDate, activeLoad, vehicle.status) ?? 0;
+              const score = Math.round(Math.max(0, capacityFit - riskScore * 0.35));
+              return { vehicle, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => (b?.score ?? 0) - (a?.score ?? 0))[0];
 
-        const route = routeRows
-          .filter((candidate) => {
-            const sameEndpoint =
-              normalizedCity(candidate.origin) === normalizedCity(shipment.source) ||
-              normalizedCity(candidate.destination) === normalizedCity(shipment.destination);
-            return sameEndpoint;
-          })
-          .sort((a, b) => numeric(a.distanceKm) - numeric(b.distanceKm))[0];
+          const route = routeRows
+            .filter((candidate) => {
+              const sameEndpoint =
+                normalizedCity(candidate.origin) === normalizedCity(shipment.source) ||
+                normalizedCity(candidate.destination) === normalizedCity(shipment.destination);
+              return sameEndpoint;
+            })
+            .sort((a, b) => numeric(a.distanceKm) - numeric(b.distanceKm))[0];
 
-        if (!bestVehicle || !route) return null;
+          if (!bestVehicle || !route) return null;
 
-        return {
-          shipmentId: shipment.id,
-          packageCode: shipment.packageCode,
-          recommendedVehicleId: bestVehicle.vehicle.id,
-          recommendedRouteId: route.id,
-          recommendedVehicle: bestVehicle.vehicle.vehicleNumber,
-          recommendedRoute: `${route.origin} to ${route.destination}`,
-          confidence: bestVehicle.score,
-          reason: "Best capacity fit after maintenance risk and current availability scoring.",
-        };
+          return {
+            shipmentId: shipment.id,
+            packageCode: shipment.packageCode,
+            recommendedVehicleId: bestVehicle.vehicle.id,
+            recommendedRouteId: route.id,
+            recommendedVehicle: bestVehicle.vehicle.vehicleNumber,
+            recommendedRoute: `${route.origin} to ${route.destination}`,
+            confidence: bestVehicle.score,
+            reason: "Best capacity fit after maintenance risk and current availability scoring.",
+          };
         })
     ).then((items) => items.filter(present));
 
