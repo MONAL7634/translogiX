@@ -11,6 +11,7 @@ interface SessionUser {
   email: string;
   name: string;
   role: string;
+  transporterId?: string | null;
 }
 
 export default function DashboardLayout({
@@ -82,7 +83,7 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header onMenuClick={() => setSidebarOpen(true)} />
+        <Header onMenuClick={() => setSidebarOpen(true)} user={user} />
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>

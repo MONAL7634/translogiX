@@ -52,7 +52,7 @@ interface OperationsData {
     location: string;
     latitude: number;
     longitude: number;
-    updatedAt: string | null;
+    updatedAt: string;
   }>;
   routeRecommendations: Array<{
     shipmentId: string;
@@ -63,8 +63,8 @@ interface OperationsData {
     trafficLevel: string;
     weatherCondition: string;
     predictedHours: number;
-    trafficSource: "google-routes" | "estimated";
-    weatherSource: "openweather" | "estimated";
+    trafficSource: "google-routes";
+    weatherSource: "openweather";
     distanceKm: number;
     savedHours: number;
     reason: string;
@@ -277,15 +277,13 @@ function GoogleTrackingMap({
     let cancelled = false;
 
     async function renderMap() {
-      if (!containerRef.current) return;
+      if (!containerRef.current || points.length === 0) return;
 
       try {
         const maps = await loadGoogleMaps(apiKey);
         if (cancelled || !containerRef.current) return;
 
-        const center = points[0]
-          ? { lat: points[0].latitude, lng: points[0].longitude }
-          : { lat: 20.5937, lng: 78.9629 };
+        const center = { lat: points[0].latitude, lng: points[0].longitude };
 
         if (!mapRef.current) {
           mapRef.current = new maps.Map(containerRef.current, {
@@ -300,12 +298,6 @@ function GoogleTrackingMap({
 
         markersRef.current.forEach((marker) => marker.setMap(null));
         markersRef.current = [];
-
-        if (points.length === 0) {
-          map.setCenter(center);
-          map.setZoom(5);
-          return;
-        }
 
         const bounds = new maps.LatLngBounds();
         markersRef.current = points.map((point) => {
@@ -349,11 +341,6 @@ function GoogleTrackingMap({
           {mapError}
         </div>
       )}
-      {points.length === 0 && !mapError && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/60 text-muted-foreground">
-          No active GPS signals yet
-        </div>
-      )}
     </div>
   );
 }
@@ -365,6 +352,11 @@ export default function AiOperationsPage() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [applyingAction, setApplyingAction] = useState<string | null>(null);
   const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+  const showLiveTracking = Boolean(googleMapsApiKey && data?.liveTracking.length);
+  const showOptimization = Boolean(data?.optimizationSuggestions.length);
+  const showRouteRecommendations = Boolean(data?.routeRecommendations.length);
+  const showDelayPredictions = Boolean(data?.delayPredictions.length);
+  const showMaintenancePredictions = Boolean(data?.maintenancePredictions.length);
 
   useEffect(() => {
     let cancelled = false;
@@ -467,21 +459,17 @@ export default function AiOperationsPage() {
             AI Operations
           </h1>
           <p className="mt-1 text-muted-foreground">
-            Basic live tracking, rerouting, optimization, delay, and maintenance predictions
+            Live tracking, rerouting, optimization, delay, and maintenance intelligence
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Updated {formatDistanceToNow(new Date(data.generatedAt), { addSuffix: true })}
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Badge variant={data.integrations.googleRoutesTraffic ? "default" : "outline"}>
-              {data.integrations.googleRoutesTraffic ? "Google traffic live" : "Traffic estimated"}
-            </Badge>
-            <Badge variant={data.integrations.openWeather ? "default" : "outline"}>
-              {data.integrations.openWeather ? "Weather live" : "Weather estimated"}
-            </Badge>
-            <Badge variant={googleMapsApiKey ? "default" : "outline"}>
-              {googleMapsApiKey ? "Google map live" : "Map key required"}
-            </Badge>
+            {data.integrations.googleRoutesTraffic && (
+              <Badge>Google traffic live</Badge>
+            )}
+            {data.integrations.openWeather && <Badge>Weather live</Badge>}
+            {googleMapsApiKey && <Badge>Google map live</Badge>}
           </div>
         </div>
         <Button
@@ -522,204 +510,182 @@ export default function AiOperationsPage() {
         />
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
-              Live GPS Tracking
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {googleMapsApiKey ? (
-              <GoogleTrackingMap
-                points={data.liveTracking}
-                apiKey={googleMapsApiKey}
-              />
-            ) : (
-              <div className="flex h-[360px] items-center justify-center rounded-md border bg-muted/30 p-6 text-center text-sm text-muted-foreground">
-                Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to render the actual Google Map.
-                GPS data is still coming from tracking updates and will appear here once
-                the key is configured.
-              </div>
-            )}
-            {data.liveTracking.length > 0 && (
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {data.liveTracking.map((point) => (
-                  <div key={point.shipmentId} className="rounded-md border p-3 text-sm">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-medium">{point.packageCode}</span>
-                      <Badge variant="outline">{point.status.replace("_", " ")}</Badge>
+      {(showLiveTracking || showOptimization) && (
+        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+          {showLiveTracking && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Live GPS Tracking
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <GoogleTrackingMap
+                  points={data.liveTracking}
+                  apiKey={googleMapsApiKey}
+                />
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {data.liveTracking.map((point) => (
+                    <div key={point.shipmentId} className="rounded-md border p-3 text-sm">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="font-medium">{point.packageCode}</span>
+                        <Badge variant="outline">{point.status.replace("_", " ")}</Badge>
+                      </div>
+                      <p className="mt-1 text-muted-foreground">
+                        {point.vehicleNumber} at {point.location}
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {point.latitude.toFixed(4)}, {point.longitude.toFixed(4)}
+                      </p>
                     </div>
-                    <p className="mt-1 text-muted-foreground">
-                      {point.vehicleNumber} at {point.location}
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {point.latitude.toFixed(4)}, {point.longitude.toFixed(4)}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5" />
-              AI/ML Route Optimization
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {data.optimizationSuggestions.length === 0 ? (
-              <div className="flex h-48 items-center justify-center text-center text-muted-foreground">
-                No unassigned created shipments need optimization.
-              </div>
-            ) : (
-              data.optimizationSuggestions.map((item) => (
-                <div key={item.shipmentId} className="rounded-md border p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="font-medium">{item.packageCode}</p>
-                    <Badge variant="secondary">{item.confidence}% fit</Badge>
-                  </div>
-                  <p className="mt-2 text-sm">
-                    {item.recommendedVehicle} via {item.recommendedRoute}
-                  </p>
-                  <p className="mt-2 text-xs text-muted-foreground">{item.reason}</p>
-                  <Button
-                    size="sm"
-                    className="mt-3"
-                    disabled={
-                      !item.recommendedVehicleId ||
-                      applyingAction === `assign:${item.shipmentId}`
-                    }
-                    onClick={() =>
-                      applyOperationsAction(
-                        `assign:${item.shipmentId}`,
-                        {
-                          action: "assign",
-                          shipmentId: item.shipmentId,
-                          vehicleId: item.recommendedVehicleId,
-                          routeId: item.recommendedRouteId ?? undefined,
-                        },
-                        `${item.packageCode} assigned from AI Ops`
-                      )
-                    }
-                  >
-                    {applyingAction === `assign:${item.shipmentId}`
-                      ? "Applying..."
-                      : "Assign"}
-                  </Button>
+                  ))}
                 </div>
-              ))
-            )}
-          </CardContent>
-        </Card>
-      </div>
+              </CardContent>
+            </Card>
+          )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Route className="h-5 w-5" />
-            Traffic, Road, and Weather Rerouting
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Package</TableHead>
-                <TableHead>Recommended Route</TableHead>
-                <TableHead>Conditions</TableHead>
-                <TableHead>ETA</TableHead>
-                <TableHead>Impact</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.routeRecommendations.map((item) => (
-                <TableRow key={item.shipmentId}>
-                  <TableCell className="font-medium">{item.packageCode}</TableCell>
-                  <TableCell>
-                    <div>{item.recommendedRoute}</div>
-                    <div className="text-xs text-muted-foreground">
-                      Current: {item.currentRoute}
+          {showOptimization && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5" />
+                  AI/ML Route Optimization
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {data.optimizationSuggestions.map((item) => (
+                  <div key={item.shipmentId} className="rounded-md border p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="font-medium">{item.packageCode}</p>
+                      <Badge variant="secondary">{item.confidence}% fit</Badge>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline">{item.trafficLevel}</Badge>
-                      <Badge variant="outline">{item.weatherCondition}</Badge>
-                      <Badge variant="outline">{item.distanceKm} km</Badge>
-                      <Badge variant="outline">
-                        {item.trafficSource === "google-routes" ? "Google" : "Estimated"} traffic
-                      </Badge>
-                      <Badge variant="outline">
-                        {item.weatherSource === "openweather" ? "Live" : "Estimated"} weather
-                      </Badge>
-                    </div>
-                  </TableCell>
-                  <TableCell>{item.predictedHours}h</TableCell>
-                  <TableCell>
-                    <span className="font-medium">
-                      {item.savedHours > 0 ? `${item.savedHours}h saved` : "Keep route"}
-                    </span>
-                    <p className="text-xs text-muted-foreground">{item.reason}</p>
+                    <p className="mt-2 text-sm">
+                      {item.recommendedVehicle} via {item.recommendedRoute}
+                    </p>
+                    <p className="mt-2 text-xs text-muted-foreground">{item.reason}</p>
                     <Button
                       size="sm"
-                      variant="outline"
-                      className="mt-2"
+                      className="mt-3"
                       disabled={
-                        !item.recommendedRouteId ||
-                        item.savedHours <= 0 ||
-                        applyingAction === `reroute:${item.shipmentId}`
+                        !item.recommendedVehicleId ||
+                        applyingAction === `assign:${item.shipmentId}`
                       }
                       onClick={() =>
                         applyOperationsAction(
-                          `reroute:${item.shipmentId}`,
+                          `assign:${item.shipmentId}`,
                           {
-                            action: "reroute",
+                            action: "assign",
                             shipmentId: item.shipmentId,
-                            routeId: item.recommendedRouteId,
+                            vehicleId: item.recommendedVehicleId,
+                            routeId: item.recommendedRouteId ?? undefined,
                           },
-                          `${item.packageCode} rerouted`
+                          `${item.packageCode} assigned from AI Ops`
                         )
                       }
                     >
-                      {applyingAction === `reroute:${item.shipmentId}`
+                      {applyingAction === `assign:${item.shipmentId}`
                         ? "Applying..."
-                        : "Apply Route"}
+                        : "Assign"}
                     </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {data.routeRecommendations.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                    No active shipments to reroute.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      {showRouteRecommendations && (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Predictive Delay Analysis
+              <Route className="h-5 w-5" />
+              Traffic, Road, and Weather Rerouting
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {data.delayPredictions.length === 0 ? (
-              <div className="flex h-40 items-center justify-center text-muted-foreground">
-                No active shipments to score.
-              </div>
-            ) : (
-              data.delayPredictions.map((item) => (
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Package</TableHead>
+                  <TableHead>Recommended Route</TableHead>
+                  <TableHead>Conditions</TableHead>
+                  <TableHead>ETA</TableHead>
+                  <TableHead>Impact</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.routeRecommendations.map((item) => (
+                  <TableRow key={item.shipmentId}>
+                    <TableCell className="font-medium">{item.packageCode}</TableCell>
+                    <TableCell>
+                      <div>{item.recommendedRoute}</div>
+                      <div className="text-xs text-muted-foreground">
+                        Current: {item.currentRoute}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge variant="outline">{item.trafficLevel}</Badge>
+                        <Badge variant="outline">{item.weatherCondition}</Badge>
+                        <Badge variant="outline">{item.distanceKm} km</Badge>
+                        <Badge variant="outline">Google traffic</Badge>
+                        <Badge variant="outline">Live weather</Badge>
+                      </div>
+                    </TableCell>
+                    <TableCell>{item.predictedHours}h</TableCell>
+                    <TableCell>
+                      <span className="font-medium">
+                        {item.savedHours > 0 ? `${item.savedHours}h saved` : "Keep route"}
+                      </span>
+                      <p className="text-xs text-muted-foreground">{item.reason}</p>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="mt-2"
+                        disabled={
+                          !item.recommendedRouteId ||
+                          item.savedHours <= 0 ||
+                          applyingAction === `reroute:${item.shipmentId}`
+                        }
+                        onClick={() =>
+                          applyOperationsAction(
+                            `reroute:${item.shipmentId}`,
+                            {
+                              action: "reroute",
+                              shipmentId: item.shipmentId,
+                              routeId: item.recommendedRouteId,
+                            },
+                            `${item.packageCode} rerouted`
+                          )
+                        }
+                      >
+                        {applyingAction === `reroute:${item.shipmentId}`
+                          ? "Applying..."
+                          : "Apply Route"}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      )}
+
+      {(showDelayPredictions || showMaintenancePredictions) && (
+        <div className="grid gap-6 xl:grid-cols-2">
+          {showDelayPredictions && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="h-5 w-5" />
+                  Predictive Delay Analysis
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {data.delayPredictions.map((item) => (
                 <div key={item.shipmentId} className="rounded-md border p-4">
                   <div className="flex items-center justify-between gap-3">
                     <div>
@@ -740,20 +706,21 @@ export default function AiOperationsPage() {
                     ))}
                   </div>
                 </div>
-              ))
-            )}
-          </CardContent>
-        </Card>
+              ))}
+              </CardContent>
+            </Card>
+          )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Gauge className="h-5 w-5" />
-              Predictive Vehicle Maintenance
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {data.maintenancePredictions.map((item) => (
+          {showMaintenancePredictions && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Gauge className="h-5 w-5" />
+                  Predictive Vehicle Maintenance
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {data.maintenancePredictions.map((item) => (
               <div key={item.vehicleId} className="rounded-md border p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
@@ -796,14 +763,11 @@ export default function AiOperationsPage() {
                 </Button>
               </div>
             ))}
-            {data.maintenancePredictions.length === 0 && (
-              <div className="flex h-40 items-center justify-center text-muted-foreground">
-                No vehicles available to score.
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
     </div>
   );
 }

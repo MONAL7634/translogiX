@@ -8,6 +8,13 @@ import {
 } from "@/lib/validations";
 import { eq } from "drizzle-orm";
 import { requireRole, verifyOwnership } from "@/lib/auth/api-utils";
+import {
+  getShipmentStatusAfterVehicleAssignment,
+  getVehicleAssignmentBlocker,
+  shouldReleaseVehicleForStatus,
+  syncVehicleStatusFromActiveShipments,
+  type ShipmentStatus,
+} from "@/lib/shipment-vehicle-rules";
 
 export async function GET(
   request: NextRequest,
@@ -114,6 +121,16 @@ export async function PATCH(
         );
       }
 
+      if (statusUpdate.status === "ASSIGNED" && existing.vehicleId) {
+        const vehicleCheck = await getVehicleAssignmentBlocker(existing.vehicleId, id);
+        if (vehicleCheck.error) {
+          return NextResponse.json(
+            { error: vehicleCheck.error },
+            { status: vehicleCheck.status ?? 400 }
+          );
+        }
+      }
+
       const [updated] = await db
         .update(shipments)
         .set({
@@ -123,7 +140,7 @@ export async function PATCH(
         .where(eq(shipments.id, id))
         .returning();
 
-      // When vehicle is assigned (status → ASSIGNED with vehicleId), ensure vehicle is BUSY
+      // When vehicle is assigned (status -> ASSIGNED with vehicleId), ensure vehicle is BUSY
       if (updated.vehicleId && statusUpdate.status === "ASSIGNED") {
         await db
           .update(vehicles)
@@ -131,12 +148,13 @@ export async function PATCH(
           .where(eq(vehicles.id, updated.vehicleId));
       }
 
-      // When shipment marked DELIVERED, optionally update vehicle back to AVAILABLE
-      if (statusUpdate.status === "DELIVERED" && updated.vehicleId) {
-        await db
-          .update(vehicles)
-          .set({ status: "AVAILABLE", updatedAt: new Date() })
-          .where(eq(vehicles.id, updated.vehicleId));
+      // When shipment exits active service, release the vehicle only if no other
+      // active shipment still references it.
+      if (
+        shouldReleaseVehicleForStatus(statusUpdate.status as ShipmentStatus) &&
+        updated.vehicleId
+      ) {
+        await syncVehicleStatusFromActiveShipments(updated.vehicleId);
       }
 
       return NextResponse.json({ shipment: updated });
@@ -147,7 +165,57 @@ export async function PATCH(
 
     // Track old vehicleId to update statuses
     const oldVehicleId = existing.vehicleId;
-    const newVehicleId = validated.vehicleId ?? existing.vehicleId;
+    const newVehicleId =
+      validated.vehicleId !== undefined
+        ? validated.vehicleId || null
+        : existing.vehicleId;
+    const targetTransporterId =
+      validated.transporterId !== undefined
+        ? validated.transporterId || null
+        : existing.transporterId;
+
+    if (
+      validated.vehicleId !== undefined &&
+      !newVehicleId &&
+      (existing.status === "PICKED_UP" || existing.status === "IN_TRANSIT")
+    ) {
+      return NextResponse.json(
+        { error: "Cannot remove a vehicle from a picked up or in-transit shipment" },
+        { status: 400 }
+      );
+    }
+
+    if (newVehicleId && newVehicleId !== oldVehicleId) {
+      const vehicleCheck = await getVehicleAssignmentBlocker(newVehicleId, id);
+      if (vehicleCheck.error) {
+        return NextResponse.json(
+          { error: vehicleCheck.error },
+          { status: vehicleCheck.status ?? 400 }
+        );
+      }
+
+      const vehicle = vehicleCheck.vehicle;
+      if (!vehicle) {
+        return NextResponse.json({ error: "Vehicle not found" }, { status: 404 });
+      }
+      const userRole = (authResult.session.user as { role?: string }).role;
+      if (userRole === "TRANSPORTER" && vehicle.transporterId !== existing.transporterId) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
+      if (targetTransporterId && vehicle.transporterId !== targetTransporterId) {
+        return NextResponse.json(
+          { error: "Vehicle does not belong to the selected transporter" },
+          { status: 400 }
+        );
+      }
+    }
+
+    const nextStatus =
+      newVehicleId && existing.status === "CREATED"
+        ? getShipmentStatusAfterVehicleAssignment(existing.status)
+        : !newVehicleId && existing.status === "ASSIGNED"
+          ? "CREATED"
+          : existing.status;
 
     const [updated] = await db
       .update(shipments)
@@ -188,6 +256,7 @@ export async function PATCH(
         ...(validated.routeId !== undefined && {
           routeId: validated.routeId || null,
         }),
+        status: nextStatus,
         updatedAt: new Date(),
       })
       .where(eq(shipments.id, id))
@@ -197,10 +266,7 @@ export async function PATCH(
     if (validated.vehicleId !== undefined) {
       // Release old vehicle if it was different
       if (oldVehicleId && oldVehicleId !== newVehicleId) {
-        await db
-          .update(vehicles)
-          .set({ status: "AVAILABLE", updatedAt: new Date() })
-          .where(eq(vehicles.id, oldVehicleId));
+        await syncVehicleStatusFromActiveShipments(oldVehicleId);
       }
       // Set new vehicle to BUSY
       if (newVehicleId && newVehicleId !== oldVehicleId) {

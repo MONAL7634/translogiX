@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Truck, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DriverLocationReporter } from "@/components/driver-location-reporter";
 
 export const metadata: Metadata = {
   title: "Driver Dashboard | TransLogiX",
@@ -72,6 +73,8 @@ export default async function DriverDashboardPage() {
 
   return (
     <div className="space-y-6">
+      <DriverLocationReporter />
+
       <div>
         <h1 className="text-2xl font-bold">Driver Dashboard</h1>
         <p className="text-muted-foreground">

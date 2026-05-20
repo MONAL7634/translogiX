@@ -4,6 +4,7 @@ import { vehicles, transporters } from "@/lib/db/schema";
 import { vehicleApiSchema } from "@/lib/validations";
 import { eq } from "drizzle-orm";
 import { requireRole, verifyOwnership } from "@/lib/auth/api-utils";
+import { findActiveShipmentUsingVehicle } from "@/lib/shipment-vehicle-rules";
 
 export async function GET(
   request: NextRequest,
@@ -97,6 +98,21 @@ export async function PATCH(
       }
     }
 
+    if (
+      validated.status &&
+      validated.status !== "BUSY"
+    ) {
+      const activeShipment = await findActiveShipmentUsingVehicle(id);
+      if (activeShipment) {
+        return NextResponse.json(
+          {
+            error: `Vehicle is assigned to active shipment ${activeShipment.packageCode}`,
+          },
+          { status: 409 }
+        );
+      }
+    }
+
     const [updated] = await db
       .update(vehicles)
       .set({
@@ -148,6 +164,16 @@ export async function DELETE(
     // Verify TRANSPORTER owns this vehicle
     const ownershipError = verifyOwnership(authResult.session, existing.transporterId);
     if (ownershipError) return ownershipError;
+
+    const activeShipment = await findActiveShipmentUsingVehicle(id);
+    if (activeShipment) {
+      return NextResponse.json(
+        {
+          error: `Cannot delete vehicle assigned to active shipment ${activeShipment.packageCode}`,
+        },
+        { status: 409 }
+      );
+    }
 
     await db.delete(vehicles).where(eq(vehicles.id, id));
 

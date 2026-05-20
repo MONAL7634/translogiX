@@ -8,7 +8,6 @@ import {
   routes,
 } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
-import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

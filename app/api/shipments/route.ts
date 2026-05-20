@@ -4,6 +4,11 @@ import { shipments, transporters, vehicles } from "@/lib/db/schema";
 import { shipmentApiSchema } from "@/lib/validations";
 import { desc, ilike, or, and, eq } from "drizzle-orm";
 import { requireTransporterScope } from "@/lib/auth/api-utils";
+import {
+  getShipmentStatusAfterVehicleAssignment,
+  getVehicleAssignmentBlocker,
+  type ShipmentStatus,
+} from "@/lib/shipment-vehicle-rules";
 
 export async function GET(request: NextRequest) {
   // Verify session — ADMIN sees all, TRANSPORTER sees own shipments
@@ -86,8 +91,36 @@ export async function POST(request: NextRequest) {
     const validated = shipmentApiSchema.parse(body);
 
     // Force TRANSPORTER role to only create shipments for their own transporter
-    const targetTransporterId =
+    let targetTransporterId =
       authResult.transporterId || validated.transporterId || null;
+    let shipmentStatus: ShipmentStatus = "CREATED";
+
+    if (validated.vehicleId) {
+      const vehicleCheck = await getVehicleAssignmentBlocker(validated.vehicleId);
+      if (vehicleCheck.error) {
+        return NextResponse.json(
+          { error: vehicleCheck.error },
+          { status: vehicleCheck.status ?? 400 }
+        );
+      }
+
+      const vehicle = vehicleCheck.vehicle;
+      if (!vehicle) {
+        return NextResponse.json({ error: "Vehicle not found" }, { status: 404 });
+      }
+      if (authResult.transporterId && vehicle.transporterId !== authResult.transporterId) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
+      if (targetTransporterId && vehicle.transporterId !== targetTransporterId) {
+        return NextResponse.json(
+          { error: "Vehicle does not belong to the selected transporter" },
+          { status: 400 }
+        );
+      }
+
+      targetTransporterId = vehicle.transporterId;
+      shipmentStatus = getShipmentStatusAfterVehicleAssignment("CREATED");
+    }
 
     const [shipment] = await db
       .insert(shipments)
@@ -106,7 +139,7 @@ export async function POST(request: NextRequest) {
         transporterId: targetTransporterId,
         vehicleId: validated.vehicleId || null,
         routeId: validated.routeId || null,
-        status: "CREATED",
+        status: shipmentStatus,
       })
       .returning();
 

@@ -4,6 +4,12 @@ import { shipments, vehicles } from "@/lib/db/schema";
 import { shipmentStatusUpdateSchema, VALID_STATUS_TRANSITIONS } from "@/lib/validations";
 import { eq } from "drizzle-orm";
 import { requireRole } from "@/lib/auth/api-utils";
+import {
+  getVehicleAssignmentBlocker,
+  shouldReleaseVehicleForStatus,
+  syncVehicleStatusFromActiveShipments,
+  type ShipmentStatus,
+} from "@/lib/shipment-vehicle-rules";
 
 /**
  * PATCH /api/driver/shipments/[id]/status
@@ -70,6 +76,16 @@ export async function PATCH(
       );
     }
 
+    if (statusUpdate.data.status === "ASSIGNED" && existing.vehicleId) {
+      const vehicleCheck = await getVehicleAssignmentBlocker(existing.vehicleId, id);
+      if (vehicleCheck.error) {
+        return NextResponse.json(
+          { error: vehicleCheck.error },
+          { status: vehicleCheck.status ?? 400 }
+        );
+      }
+    }
+
     const [updated] = await db
       .update(shipments)
       .set({
@@ -87,12 +103,13 @@ export async function PATCH(
         .where(eq(vehicles.id, updated.vehicleId));
     }
 
-    // When shipment marked DELIVERED, update vehicle back to AVAILABLE
-    if (statusUpdate.data.status === "DELIVERED" && updated.vehicleId) {
-      await db
-        .update(vehicles)
-        .set({ status: "AVAILABLE", updatedAt: new Date() })
-        .where(eq(vehicles.id, updated.vehicleId));
+    // When shipment leaves active service, release the vehicle only if no other
+    // active shipment still references it.
+    if (
+      shouldReleaseVehicleForStatus(statusUpdate.data.status as ShipmentStatus) &&
+      updated.vehicleId
+    ) {
+      await syncVehicleStatusFromActiveShipments(updated.vehicleId);
     }
 
     return NextResponse.json({ shipment: updated });

@@ -35,6 +35,7 @@ import {
   AlertTriangle,
   Package,
   MapPin,
+  LocateFixed,
   Truck,
   CheckCircle,
   Send,
@@ -45,6 +46,7 @@ import {
   STATUS_BADGE_COLORS,
   VALID_STATUS_TRANSITIONS,
 } from "@/lib/validations";
+import { DriverLocationReporter } from "@/components/driver-location-reporter";
 
 interface Shipment {
   id: string;
@@ -109,6 +111,7 @@ export function DriverPanelClient() {
   );
   const [locationErrors, setLocationErrors] = useState<LocationFormErrors>({});
   const [locationSubmitting, setLocationSubmitting] = useState(false);
+  const [locating, setLocating] = useState(false);
 
   // Mark as delivered state
   const [deliveredDialog, setDeliveredDialog] = useState<Shipment | null>(null);
@@ -329,6 +332,42 @@ export function DriverPanelClient() {
     }
   };
 
+  const handleUseCurrentGps = () => {
+    if (!navigator.geolocation) {
+      toast.error("GPS is not available in this browser.");
+      return;
+    }
+
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationForm((prev) => ({
+          location: prev.location.trim() || "Current GPS location",
+          latitude: position.coords.latitude.toFixed(6),
+          longitude: position.coords.longitude.toFixed(6),
+        }));
+        setLocationErrors((prev) => ({
+          ...prev,
+          latitude: undefined,
+          longitude: undefined,
+        }));
+        setLocating(false);
+        toast.success("Current GPS coordinates added.");
+      },
+      (geoError) => {
+        setLocating(false);
+        toast.error(
+          geoError.message || "Allow location access to use current GPS."
+        );
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10_000,
+        maximumAge: 30_000,
+      }
+    );
+  };
+
   const openTrackingForm = (shipmentId: string) => {
     setSelectedShipmentForTracking(shipmentId);
     setLocationForm(initialLocationForm);
@@ -363,6 +402,8 @@ export function DriverPanelClient() {
 
   return (
     <div className="space-y-6">
+      <DriverLocationReporter shipments={shipments} />
+
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold">My Shipments</h1>
@@ -520,11 +561,20 @@ export function DriverPanelClient() {
           <DialogHeader>
             <DialogTitle>Add Location Update</DialogTitle>
             <DialogDescription>
-              Enter the current location of the shipment. Latitude and longitude
-              are optional.
+              Add the shipment location manually or use this device&apos;s GPS.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full gap-2"
+              onClick={handleUseCurrentGps}
+              disabled={locating || locationSubmitting}
+            >
+              <LocateFixed className="h-4 w-4" />
+              {locating ? "Reading GPS..." : "Use Current GPS"}
+            </Button>
             <div className="space-y-2">
               <Label htmlFor="location">
                 Location <span className="text-destructive">*</span>
