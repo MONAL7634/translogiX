@@ -11,6 +11,10 @@ const protectedRoutes = ["/admin", "/transporter", "/driver", "/customer"];
 
 // Public route prefixes — only auth endpoints and public tracking are public
 const publicRoutePrefixes = ["/login", "/track", "/api/auth"];
+const sessionCookieNames = [
+  "better-auth.session_token",
+  "__Secure-better-auth.session_token",
+];
 
 function isPublicRoute(pathname: string): boolean {
   return publicRoutePrefixes.some((route) => pathname.startsWith(route));
@@ -22,16 +26,20 @@ function isProtectedRoute(pathname: string): boolean {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const cookieHeader = request.headers.get("cookie") ?? "";
 
   // Allow public routes
   if (isPublicRoute(pathname)) {
     return NextResponse.next();
   }
 
-  // Check for session cookie
-  const sessionCookie = request.cookies.get("better-auth.session_token");
+  // Check for Better Auth session cookies. Production HTTPS deployments can use
+  // the __Secure- prefixed cookie name, so preserve the original header below.
+  const hasSessionCookie = sessionCookieNames.some((name) =>
+    request.cookies.has(name)
+  );
 
-  if (!sessionCookie) {
+  if (!hasSessionCookie) {
     // Redirect to login if no session and accessing protected route or root
     if (isProtectedRoute(pathname) || pathname === "/") {
       const loginUrl = new URL("/login", request.url);
@@ -51,7 +59,7 @@ export async function middleware(request: NextRequest) {
       `${request.nextUrl.origin}/api/auth/get-session`,
       {
         headers: {
-          cookie: `better-auth.session_token=${sessionCookie.value}`,
+          cookie: cookieHeader,
         },
       }
     );

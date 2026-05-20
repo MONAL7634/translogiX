@@ -66,23 +66,27 @@ export default function LoginPage() {
 
       // The sign-in response includes user data with role
       const role = data?.user?.role;
+      let homePath = "/customer";
 
       switch (role) {
         case "ADMIN":
-          router.push("/admin");
+          homePath = "/admin";
           break;
         case "TRANSPORTER":
-          router.push("/transporter");
+          homePath = "/transporter";
           break;
         case "DRIVER":
-          router.push("/driver");
+          homePath = "/driver";
           break;
         case "CUSTOMER":
-          router.push("/customer");
+          homePath = "/customer";
           break;
         default:
-          router.push("/customer");
+          homePath = "/customer";
       }
+      router.push(homePath);
+      router.refresh();
+      setLoading(false);
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
       setLoading(false);
